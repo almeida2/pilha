@@ -3,6 +3,7 @@ package com.fatec.pilha;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
@@ -30,9 +31,24 @@ public class Req02VerificaEmpilharPilhaTests {
         // quando o usuario tenta empilhar um elemento
         try {
             pilha.empilhar(25);
+            fail("Deve lançar IllegalStateException");
         } catch (IllegalStateException e) {
             // entao deve lancar um exception
             assertEquals("Erro: A pilha está cheia (overflow).", e.getMessage());
         }
     }
+
+    @Test
+    void ct02b_empilharUmElemento_com_pilha_cheia() {
+        // dado que a pilha esta cheia
+        Pilha pilha = new Pilha();
+        for (int i = 0; i < 10; i++) {
+            pilha.empilhar(i);
+        }
+        // quando o usuario tenta empilhar um elemento
+        // entao deve lancar um exception
+        assertThrows(IllegalStateException.class, () -> pilha.empilhar(25), "Erro: A pilha está cheia (overflow).");
+
+    }
+
 }
